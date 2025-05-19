@@ -19,8 +19,43 @@ You can install the development version of KQC like so:
 # FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
 ```
 
+## Scope:
+
+- given some raw data and a cleaning log, the cleaning log is validated
+  against the raw data (and the tool).once validated, a clean dataset is
+  generated. This generated dataset undergoes a series of checks that
+  are considered to be the minimal required checks:
+
+  - id duplicates
+  - row duplicates
+  - soft duplicates
+  - check outliers for numercial variables (we must include a way to
+    ignore some values if considered correct in the cleaning log)
+  - allow for the download of the clean data
+
 ## Roadmap
 
-- [ ] identify the main functions to be ported based on:
-  - [ ] oPT
-  - [ ] Libya
+- The kqc package prioritizes essential data quality checks for minimal
+  Kobo data submission requirements:
+  - Binary Column Validation (check_binary_columns): Ensures binary columns contain only 0, 1, or NA.
+
+  - Outlier Detection (col_vals_not_outliers): Custom function to identify numerical outliers, accounting for cleaning log corrections.
+
+  - Select Multiple Consistency Check: Validates consistency between select_multiple main and binary columns.
+
+  - Soft Duplicate Detection (rows_dissimilar): Identifies highly similar rows using defined criteria.
+- Other relevant checks, identified from existing pipelines, could be
+  considered for future kqc versions:
+  - Fundamental checks like ID/row duplicates and missingness are covered by pointblank.
+
+  - Specific Numeric Code Checks: Flags specific numeric codes (e.g., 999) used as placeholders.
+
+  - Survey Duration Checks: Validates survey duration against bounds.
+
+  - Geospatial Checks: Validates GPS points (requires external data).
+
+  - Audit Trail Analysis: Detailed analysis of audit events.
+
+  - 'Other' Response/Translation Checks: Validates outcomes of processing (e.g., remaining non-English text).
+
+  - User-Defined Logic Checks: Framework for custom logical checks.
