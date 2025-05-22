@@ -1,5 +1,6 @@
 #' Check for uuid validity
 #'
+#' `r lifecycle::badge("experimental")`
 #' @inheritParams pointblank::serially
 #' @param  ... Unused for now, kept for future extensions
 #'

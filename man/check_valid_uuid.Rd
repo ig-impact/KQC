@@ -26,5 +26,5 @@ called primarily for its potential side-effects (e.g., signaling failure).
 The test function returns a logical value.
 }
 \description{
-Check for uuid validity
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
