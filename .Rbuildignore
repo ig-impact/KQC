@@ -1,8 +1,9 @@
-^renv$
-^renv\.lock$
-^data-raw$
+^LICENSE\.md$
+^README\.Rmd$
+^\.pre-commit-config\.yaml$
 ^_pkgdown\.yml$
+^data-raw$
 ^docs$
 ^pkgdown$
-^README\.Rmd$
-^LICENSE\.md$
+^renv$
+^renv\.lock$
