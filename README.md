@@ -9,8 +9,6 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of KQC is to …
-
 ## Installation
 
 You can install the development version of KQC like so:
@@ -19,43 +17,53 @@ You can install the development version of KQC like so:
 # FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
 ```
 
-## Scope:
+## What does **KQC** do?
 
-- given some raw data and a cleaning log, the cleaning log is validated
-  against the raw data (and the tool).once validated, a clean dataset is
-  generated. This generated dataset undergoes a series of checks that
-  are considered to be the minimal required checks:
+*KQC* (Kobo Quality Checks) is an R package-in-progress that will let
+you:
 
-  - id duplicates
-  - row duplicates
-  - soft duplicates
-  - check outliers for numercial variables (we must include a way to
-    ignore some values if considered correct in the cleaning log)
-  - allow for the download of the clean data
+1.  **Validate an external cleaning log** against Kobo raw data and the
+    XLS-form.  
+2.  **Apply** that log to generate a corrected ( “clean” ) dataset.  
+3.  **Run a minimal QC battery** – duplicate IDs, duplicate rows, soft
+    duplicates and numeric outliers (with an exemption mechanism for
+    values already justified in the cleaning log).  
+4.  **Export** the clean, PII-scrubbed data (XLSX/RDS) and – later – an
+    HTML audit report, ready for download or hand-off.
 
-## Roadmap
+A Shiny interface is planned so that non-coder colleagues can paste an
+asset-ID, attach a cleaning-log XLSX and get the same outputs with one
+click.
 
-- The kqc package prioritizes essential data quality checks for minimal
-  Kobo data submission requirements:
-  - Binary Column Validation (check_binary_columns): Ensures binary columns contain only 0, 1, or NA.
+------------------------------------------------------------------------
 
-  - Outlier Detection (col_vals_not_outliers): Custom function to identify numerical outliers, accounting for cleaning log corrections.
+## Implementation tracker — v 0·0·0.9000
 
-  - Select Multiple Consistency Check: Validates consistency between select_multiple main and binary columns.
+| Area                 | Task                                                | Status     |
+|----------------------|-----------------------------------------------------|------------|
+| **Infrastructure**   | Package scaffold (`R/`, `man/`, CI, testthat)       | **✓ done** |
+| **Ingestion**        | Download asset with *robotoolbox* + convert to `dm` | ☐          |
+| **Cleaning-log**     | Validate structure + merge into raw data            | ☐          |
+| **Validation rules** | Duplicate `_uuid` rows                              | ☐          |
+|                      | Full row duplicates                                 | ☐          |
+|                      | Soft duplicates (string distance)                   | ☐          |
+|                      | Numeric outliers with exemption support             | ☐          |
+|                      | Binary-column validator (`check_binary_columns`)    | ☐          |
+|                      | Select-multiple consistency                         | ☐          |
+| **Export**           | Write clean multi-sheet XLSX / RDS                  | ☐          |
+|                      | Produce HTML audit report                           | ☐          |
+| **Shiny**            | Single-asset UI + download buttons                  | ☐          |
 
-  - Soft Duplicate Detection (rows_dissimilar): Identifies highly similar rows using defined criteria.
-- Other relevant checks, identified from existing pipelines, could be
-  considered for future kqc versions:
-  - Fundamental checks like ID/row duplicates and missingness are covered by pointblank.
+( ☐ = Not yet implemented)
 
-  - Specific Numeric Code Checks: Flags specific numeric codes (e.g., 999) used as placeholders.
+------------------------------------------------------------------------
 
-  - Survey Duration Checks: Validates survey duration against bounds.
+## Roadmap (high-level)
 
-  - Geospatial Checks: Validates GPS points (requires external data).
-
-  - Audit Trail Analysis: Detailed analysis of audit events.
-
-  - 'Other' Response/Translation Checks: Validates outcomes of processing (e.g., remaining non-English text).
-
-  - User-Defined Logic Checks: Framework for custom logical checks.
+*Phase 0·1* — Ingestion + duplicate checks  
+*Phase 0·2* — Cleaning-log merger + numeric outliers  
+*Phase 0·3* — Binary & select-multiple consistency rules  
+*Phase 0·4* — Export layer + HTML report  
+*Phase 0·5* — Shiny minimal viable product  
+*Phase 1·0* — Extra rules (sentinel codes, GPS, audit trail), docs,
+CRAN-ready
