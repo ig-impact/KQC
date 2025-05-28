@@ -42,32 +42,45 @@ A Shiny interface is planned so that non-coder colleagues can paste an asset-ID,
 
 ---
 
-## Implementation tracker — v 0·0·0.9000
+## Quick Start
 
-| Area | Task | Status |
-|------|------|--------|
-| **Infrastructure** | Package scaffold (`R/`, `man/`, CI, testthat) | **✓ done** |
-| **Ingestion** | Download asset with *robotoolbox* + convert to `dm` | ☐ |
-| **Cleaning-log** | Validate structure + merge into raw data | ☐ |
-| **Validation rules** | Duplicate `_uuid` rows | ☐ |
-|  | Full row duplicates | ☐ |
-|  | Soft duplicates (string distance) | ☐ |
-|  | Numeric outliers with exemption support | ☐ |
-|  | Binary-column validator (`check_binary_columns`) | ☐ |
-|  | Select-multiple consistency | ☐ |
-| **Export** | Write clean multi-sheet XLSX / RDS | ☐ |
-|  | Produce HTML audit report | ☐ |
-| **Shiny** | Single-asset UI + download buttons | ☐ |
+```{r}
+library(KQC)
+library(pointblank)
+library(gt)
 
-( ☐ = Not yet implemented)
+msna_opt_HH[1:5, 1:4] |>
+  gt()
+```
 
----
+```{r, message=FALSE, warning=FALSE}
+agent <- create_agent(tbl = msna_opt_HH) |>
+  col_is_uuid()
+```
 
-## Roadmap (high-level)
+```{r echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+gt_table <- get_agent_x_list(agent)$report_object
+gt::gtsave(gt_table, "man/figures/gt_table.png")
+```
 
-*Phase 0·1*  — Ingestion + duplicate checks  
-*Phase 0·2*  — Cleaning-log merger + numeric outliers  
-*Phase 0·3*  — Binary & select-multiple consistency rules  
-*Phase 0·4*  — Export layer + HTML report  
-*Phase 0·5*  — Shiny minimal viable product  
-*Phase 1·0*  — Extra rules (sentinel codes, GPS, audit trail), docs, CRAN-ready
+```{r, echo=FALSE, out.width="100%", fig.cap="A pointblank agent with a UUID column check.", fig.align="center", message=FALSE, warning=FALSE}
+knitr::include_graphics("man/figures/gt_table.png")
+```
+
+After running the interrogation, the agent will have a `status` column that indicates whether the checks passed or failed. You can also use the `get_agent_x_list()` function to extract the report object and save it as an HTML table.
+
+```{r, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+report <- agent |> interrogate()
+gt_table <- get_agent_x_list(report)$report_object
+gt::gtsave(gt_table, "man/figures/gt_table_int.png")
+```
+
+```{r, echo=FALSE, out.width="100%", fig.cap="A pointblank agent after interrogation", fig.align="center", message=FALSE, warning=FALSE}
+knitr::include_graphics("man/figures/gt_table_int.png")
+```
+
+```{r, echo=FALSE,  message=FALSE, warning=FALSE}
+set.seed(1)
+sample(c(msna_opt_HH$`_uuid`[1:10], NA_character_), 10, replace = TRUE) |>
+  table(useNA = "ifany")
+```

@@ -8,6 +8,13 @@
 \description{
 What the package does (one paragraph).
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://pkgs.impact-initiatives.org/KQC}
+}
+
+}
 \author{
 \strong{Maintainer}: Iyed GHEDAMSI \email{iyed.ghedamsi@impact-initiatives.org}
 
