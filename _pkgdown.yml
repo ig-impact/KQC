@@ -1,4 +1,4 @@
-url: ~
+url: "https://pkgs.impact-initiatives.org/KQC"
 template:
   bootstrap: 5
   light-switch: true
@@ -7,3 +7,11 @@ template:
     heading_font: {google: "Roboto Condensed"}
     code_font: {google: "JetBrains Mono"}
 
+reference:
+- title: "Validation functions"
+  contents: 
+  - starts_with("rows")
+  - starts_with("col")
+- title: "Datasets"
+  contents:
+  - starts_with("msna")

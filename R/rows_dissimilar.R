@@ -8,7 +8,7 @@
 #'
 #' @inherit pointblank::serially return
 #' @export
-check_dissimilar <- function(x, tool, threshold = 7, ...) {
+rows_dissimilar <- function(x, tool, threshold = 7, ...) {
   x |>
     pointblank::col_vals_null(
       columns = "uuid",
@@ -16,8 +16,9 @@ check_dissimilar <- function(x, tool, threshold = 7, ...) {
         cleaningtools::check_soft_duplicates(
           dataset = x,
           kobo_survey = tool,
-          uuid_column = "_uuid", # NOTE: Assuming the uuid column is always named "_uuid"
-          threshold = 7
+          uuid_column = "_uuid",
+          threshold = threshold,
+          ...
         )$soft_duplicate_log
       }
     )
