@@ -2,3 +2,4 @@
 
 export(col_is_uuid)
 export(rows_dissimilar)
+importFrom(lifecycle,deprecated)
