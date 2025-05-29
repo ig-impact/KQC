@@ -49,8 +49,7 @@ library(KQC)
 library(pointblank)
 library(gt)
 
-msna_opt_HH[1:5, 1:4] |>
-  gt()
+msna_opt_HH[1:5, 1:4]
 ```
 
 ```{r, message=FALSE, warning=FALSE}
