@@ -13,8 +13,14 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
     cleaningtools (>= 0.0.0.9003),
+    gt,
+    htmltools,
     lifecycle,
-    pointblank
+    miniUI,
+    pointblank,
+    robotoolbox,
+    shiny,
+    shinyjs
 Suggests: 
     dplyr,
     testthat (>= 3.0.0)
