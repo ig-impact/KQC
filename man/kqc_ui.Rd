@@ -7,9 +7,9 @@
 kqc_ui()
 }
 \value{
-A Shiny miniUI application for validating data submissions.
+A Shiny miniUI application.
 }
 \description{
 This function launches a Shiny miniUI application for validating data
-submissions.
+submissions using the KQC module.
 }

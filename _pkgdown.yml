@@ -15,6 +15,6 @@ reference:
 - title: "Datasets"
   contents:
   - starts_with("msna")
-- title: "UI"
+- title: "Shiny"
   contents:
-  - contains("ui")
+  - starts_with("kqc_")

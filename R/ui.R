@@ -1,158 +1,73 @@
-# --- Mock Functions for robotoolbox and pointblank ---
-# These functions simulate the behavior of robotoolbox and pointblank
-# You will need to replace these with your actual package calls.
+# --- Shiny Module for Data Submission Validation ---
 
-#' Mock function to simulate data submission download from robotoolbox
+#' UI for the Data Quality Control Module
 #'
-#' This function simulates a network delay and returns a dummy data frame
-#' if a specific UID is provided. Otherwise, it throws an error.
-#'
-#' @keywords internal
-#' @param uid A character string representing the unique identifier.
-#' @return A data frame if `uid` is "valid_uid", otherwise throws an error.
-download_submissions_mock <- function(uid) {
-  message("Simulating robotoolbox download for UID: ", uid)
-  Sys.sleep(2) # Simulate network delay for download
-
-  if (uid == "valid_uid") {
-    # Return a dummy data frame for demonstration
-    data.frame(
-      id = 1:5,
-      submission_time = Sys.time() - c(5, 4, 3, 2, 1) * 86400,
-      value1 = c(10, 20, 30, 40, NA), # NA included to demonstrate NA checks
-      value2 = c("A", "B", "C", "D", "E"),
-      stringsAsFactors = FALSE
-    )
-  } else {
-    stop(
-      "Invalid UID or download failed. Please use 'valid_uid' for demonstration." # nolint line_length_linter
-    )
-  }
-}
-
-#' Mock function to simulate pointblank agent creation and interrogation
-#'
-#' This function creates a simple pointblank agent with predefined checks
-#' and interrogates the provided data.
-#'
-#' @keywords internal
-#' @param data A data frame to be interrogated by the pointblank agent.
-#' @return A pointblank agent object after interrogation.
-#' @importFrom pointblank create_agent col_exists col_vals_gt col_vals_lt
-#' @importFrom pointblank col_vals_not_null col_vals_in_set
-#' @importFrom pointblank interrogate action_levels get_agent_report
-#' @importFrom gt as_raw_html
-create_pb_agent_mock <- function(data) {
-  message("Simulating pointblank agent interrogation.")
-  Sys.sleep(3) # Simulate time taken for interrogation
-
-  if (is.null(data) || !is.data.frame(data)) {
-    stop("No valid data provided for validation.")
-  }
-
-  agent <- pointblank::create_agent(
-    tbl = data,
-    label = "Data Submission Validation Report"
-  ) |>
-    pointblank::col_exists(
-      columns = c("id", "submission_time", "value1", "value2")
-    ) |>
-    pointblank::col_vals_gt(
-      columns = "value1",
-      value = 0,
-      na_pass = TRUE
-    ) |>
-    pointblank::col_vals_lt(
-      columns = "value1",
-      value = 100,
-      na_pass = TRUE,
-      actions = pointblank::action_levels(
-        warn_at = 0.5,
-        stop_at = 0.75
-      )
-    ) |>
-    pointblank::col_vals_not_null(
-      columns = "value2"
-    ) |>
-    pointblank::col_vals_in_set(
-      columns = "value2",
-      set = c("A", "B", "C", "D", "E", "F")
-    ) |>
-    pointblank::interrogate()
-
-  agent
-}
-
-#' User Interface for Data Submission Validator
-#'
-#' This function launches a Shiny miniUI application for validating data
-#' submissions.
-#'
-#' @return A Shiny miniUI application for validating data submissions.
-#' @export
-#' @importFrom shiny shinyApp reactiveValues observeEvent req withProgress
-#' @importFrom shiny incProgress showNotification
-#' @importFrom shiny showNotification renderUI HTML textInput actionButton
-#' @importFrom shiny icon uiOutput fillCol
-#' @importFrom miniUI miniPage gadgetTitleBar miniContentPanel
-#' @importFrom shinyjs useShinyjs disable enable
+#' @param id character. A unique ID for the module instance.
+#' @return A Shiny UI tag list.
+#' @importFrom shiny textInput actionButton icon uiOutput
 #' @importFrom htmltools div
-kqc_ui <- function() {
-  ui <- miniUI::miniPage(
-    shinyjs::useShinyjs(),
+#' @importFrom shinyjs useShinyjs
+kqc_module_ui <- function(id) {
+  ns <- shiny::NS(id) # Namespace function
 
-    # Title bar for the miniUI application
-    miniUI::gadgetTitleBar("Data Submission Validator"),
+  htmltools::tagList(
+    shinyjs::useShinyjs(), # Initialize shinyjs for enable/disable
 
-    # Main content panel
-    miniUI::miniContentPanel(
-      # Use fillCol for a flexible column layout
-      shiny::fillCol(
-        flex = c(NA, NA, 1),
-        # Input field for the UID
-        shiny::textInput(
-          "uid_input",
-          "Enter Submission UID:",
-          value = "valid_uid",
-          placeholder = "e.g., valid_uid"
-        ),
-        # Container for action buttons
-        htmltools::div(
-          style = "display: flex; gap: 10px; margin-bottom: 15px;",
-          # Button to initiate data download
-          shiny::actionButton(
-            "download_btn",
-            "Download Data",
-            icon = shiny::icon("download"),
-            class = "btn-primary"
-          ), # Add a primary button style
-          # Button to initiate data validation (initially disabled)
-          shiny::actionButton(
-            "validate_btn",
-            "Validate Data",
-            icon = shiny::icon("check-circle"),
-            class = "btn-info"
-          ) # Add an info button style
-        ),
-        # Output area for displaying the pointblank report
-        shiny::uiOutput("report_output")
+    # Input field for the UID
+    shiny::textInput(
+      ns("uid_input"),
+      "Enter Submission UID:",
+      value = "au3c9H4TvJjepgEAzEzk2j", # Placeholder for a real UID
+      placeholder = "e.g., au3c9H4TvJjepgEAzEzk2j"
+    ),
+    # Container for action buttons
+    htmltools::div(
+      style = "display: flex; gap: 10px; margin-bottom: 15px;",
+      # Button to initiate data download
+      shiny::actionButton(
+        ns("download_btn"),
+        "Download Data",
+        icon = shiny::icon("download"),
+        class = "btn-primary"
+      ),
+      # Button to initiate data validation (initially disabled)
+      shiny::actionButton(
+        ns("validate_btn"),
+        "Validate Data",
+        icon = shiny::icon("check-circle"),
+        class = "btn-info"
       )
-    )
+    ),
+    # Output area for displaying the pointblank report
+    shiny::uiOutput(ns("report_output"))
   )
+}
 
-  server <- function(input, output, session) {
+#' Server logic for the Data Quality Control Module
+#'
+#' @param id character. A unique ID for the module instance.
+#' @return A reactive expression that returns the pointblank agent object.
+#' @importFrom shiny reactiveValues observeEvent req withProgress incProgress
+#' @importFrom shiny showNotification renderUI HTML
+#' @importFrom shinyjs disable enable
+#' @importFrom robotoolbox kobo_setup kobo_data
+#' @importFrom pointblank create_agent col_exists col_vals_gt col_vals_lt
+#' @importFrom pointblank col_vals_not_null col_vals_in_set interrogate
+#' @importFrom pointblank action_levels get_agent_report
+#' @importFrom gt as_raw_html
+kqc_module_server <- function(id) {
+  shiny::moduleServer(id, function(input, output, session) {
     rv <- shiny::reactiveValues(
       downloaded_data = NULL,
       download_successful = FALSE,
-      validation_report = NULL
+      validation_report = NULL,
+      agent = NULL
     )
 
     # --- Initial Setup ---
-    # Disable the validate button when the app starts
     shiny::observeEvent(
       NULL,
       {
-        # Use observeEvent(NULL, ...) with once = TRUE for initial setup
         shinyjs::disable("validate_btn")
       },
       once = TRUE
@@ -162,13 +77,11 @@ kqc_ui <- function() {
     shiny::observeEvent(input$download_btn, {
       shiny::req(input$uid_input)
 
-      # Reset states before a new download attempt
       rv$download_successful <- FALSE
       rv$downloaded_data <- NULL
       rv$validation_report <- NULL
-      shinyjs::disable("validate_btn") # Disable validate button during download
+      shinyjs::disable("validate_btn")
 
-      # Show a progress spinner during the download process
       shiny::withProgress(message = "Downloading data...", value = 0, {
         shiny::incProgress(
           0.2,
@@ -176,8 +89,9 @@ kqc_ui <- function() {
         )
         tryCatch(
           {
-            # Call the mocked robotoolbox function to get data
-            data <- download_submissions_mock(input$uid_input)
+            robotoolbox::kobo_setup()
+
+            data <- robotoolbox::kobo_data(input$uid_input)
             rv$downloaded_data <- data
             rv$download_successful <- TRUE
             shiny::incProgress(0.8, detail = "Download complete!")
@@ -188,9 +102,12 @@ kqc_ui <- function() {
             )
           },
           error = function(e) {
-            # Handle download errors
             shiny::showNotification(
-              paste("Download failed:", e$message),
+              paste(
+                "Download failed:",
+                e$message,
+                "\nEnsure KOBOTOOLBOX_URL and KOBOTOOLBOX_TOKEN are set in .Renviron." # nolint line_length_linter
+              ),
               type = "error",
               duration = NULL
             )
@@ -199,7 +116,6 @@ kqc_ui <- function() {
         )
       })
 
-      # Enable the validate button if the download was successful
       if (rv$download_successful) {
         shinyjs::enable("validate_btn")
       }
@@ -211,17 +127,29 @@ kqc_ui <- function() {
 
       rv$validation_report <- NULL # Clear any previous validation report
 
-      # Show a progress spinner during the validation process
       shiny::withProgress(message = "Validating data...", value = 0, {
         shiny::incProgress(0.2, detail = "Running pointblank agent...")
         tryCatch(
           {
-            # Call the mocked pointblank function to interrogate the data
-            agent <- create_pb_agent_mock(rv$downloaded_data)
+            # Create and interrogate the pointblank agent
+            agent <- pointblank::create_agent(
+              tbl = rv$downloaded_data,
+              label = "Data Submission Validation Report"
+            ) |>
+              pointblank::col_exists(
+                columns = c("start", "end", "audit")
+              ) |>
+              pointblank::col_is_date(
+                columns = "today"
+              ) |>
+              pointblank::col_vals_not_null(
+                columns = "_uuid"
+              ) |>
+              pointblank::interrogate()
+
+            rv$agent <- agent # Store the agent in reactive values
             shiny::incProgress(0.5, detail = "Generating report...")
-            # Get the gt table from the agent report
             gt_report <- pointblank::get_agent_report(agent)
-            # Convert the gt table to raw HTML for display
             report_html <- gt::as_raw_html(gt_report)
             rv$validation_report <- report_html
             shiny::incProgress(0.3, detail = "Validation complete!")
@@ -232,7 +160,6 @@ kqc_ui <- function() {
             )
           },
           error = function(e) {
-            # Handle validation errors
             shiny::showNotification(
               paste("Validation failed:", e$message),
               type = "error",
@@ -246,21 +173,76 @@ kqc_ui <- function() {
     # --- Render the Validation Report ---
     output$report_output <- shiny::renderUI({
       if (!is.null(rv$validation_report)) {
-        # If a report exists, render it as HTML
         shiny::HTML(rv$validation_report)
       } else if (!is.null(rv$downloaded_data) && !rv$download_successful) {
-        # Message if download failed
         shiny::HTML(
-          "<p style='color: red; font-weight: bold;'>Download failed. Please check the UID and try again.</p>" # nolint line_length_linter
+          "<p style='color: red; font-weight: bold;'>Download failed. Please check the UID and your robotoolbox setup (environment variables for credentials) and try again.</p>" # nolint line_length_linter
         )
       } else {
-        # Initial instructional message
         shiny::HTML(
-          "<p>Enter a UID (e.g., 'valid_uid') and click 'Download Data' to begin the process.</p>" # nolint line_length_linter
+          "<p>Enter a UID (e.g., 'aPzY8eN3wTfQ2uB1oC7jK') and click 'Download Data' to begin the process.</p>" # nolint line_length_linter
         )
+      }
+    })
+
+    # Return the pointblank agent object
+    return(shiny::reactive(rv$downloaded_data)) # nolint return_linter
+  })
+}
+
+
+# --- Main Shiny Application (kqc_ui) ---
+
+#' User Interface for Data Submission Validator
+#'
+#' This function launches a Shiny miniUI application for validating data
+#' submissions using the KQC module.
+#'
+#' @return A Shiny miniUI application.
+#' @export
+#' @importFrom shiny shinyApp reactiveValues observeEvent req withProgress
+#' @importFrom shiny incProgress showNotification
+#' @importFrom shiny renderUI HTML textInput actionButton icon uiOutput fillCol
+#' @importFrom miniUI miniPage gadgetTitleBar miniContentPanel
+#' @importFrom shinyjs useShinyjs disable enable
+#' @importFrom htmltools div
+#' @importFrom pointblank get_data_extracts
+#' @importFrom robotoolbox kobo_setup
+kqc_ui <- function() {
+  ui <- miniUI::miniPage(
+    shinyjs::useShinyjs(),
+    miniUI::gadgetTitleBar("Data Submission Validator"),
+    miniUI::miniContentPanel(
+      shiny::fillCol(
+        flex = c(NA, NA, 1),
+        kqc_module_ui("kqc_validator_instance") # Call the module UI
+      )
+    )
+  )
+
+  server <- function(input, output, session) {
+    # Call the module server and capture the returned pointblank agent
+    # The returned agent is a reactive expression, so access with ()
+    pb_agent_reactive <- kqc_module_server("kqc_validator_instance")
+
+    shiny::observeEvent(input$cancel, {
+      shiny::stopApp(NULL)
+    })
+
+    shiny::observeEvent(input$done, {
+      # Ensure agent is available before trying to get extracts
+      if (!is.null(pb_agent_reactive())) {
+        shiny::stopApp(pb_agent_reactive())
+      } else {
+        shiny::showNotification(
+          "Validation did not pass all checks or no agent available. Cannot extract data.", # nolint line_length_linter
+          type = "warning",
+          duration = 5
+        )
+        shiny::stopApp(NULL)
       }
     })
   }
 
-  shiny::shinyApp(ui, server)
+  shiny::runGadget(ui, server)
 }
