@@ -1,0 +1,90 @@
+---
+title: "Getting Started with kqc" 
+---
+
+
+
+```{r
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 🔐 Setting Up KoboToolbox Credentials
+
+Before using `kqc`, ensure your KoboToolbox credentials are set in your `.Renviron` file:
+
+```r
+# ~/.Renviron
+KOBOTOOLBOX_URL="https://kf.kobotoolbox.org"
+KOBOTOOLBOX_TOKEN="your-long-personal-token-goes-here"
+```
+
+Restart R after editing `.Renviron`:
+
+```r
+Sys.getenv("KOBOTOOLBOX_URL")
+Sys.getenv("KOBOTOOLBOX_TOKEN")
+```
+
+# 🚀 Launching the Validator UI
+
+To open the validation gadget, run:
+
+```r
+agent <- kqc_ui()
+```
+
+This launches a gadget prompting for a Kobo submission UID.
+
+## Step 1: Enter a UID
+
+Enter a submission UID in the input field:
+
+## Step 2: Download Data
+
+Click the **Download Data** button. The app fetches your data from KoboToolbox.
+
+✅ On success, you'll be notified and can proceed to validation.
+
+## Step 3: Validate Data
+
+Click **Validate Data** to run `pointblank` checks:
+
+* Column presence (`start`, `end`, `audit`)
+* Date validation (`today`)
+* UUID structure (if applicable)
+* Form dissimilarities (custom logic)
+
+## Step 4: Review the Report
+
+Interact with the `pointblank` validation report:
+
+* Click headers for detail
+* Review failure summaries
+
+## Step 5: Finish & Return Agent
+
+Click **Done** to return the validation `agent` to your console:
+
+```r
+agent <- kqc_ui()
+```
+
+# 🔁 Recovering Unassigned Agent
+
+If you forget to assign the output:
+
+```r
+agent <- .Last.value
+```
+
+Use it as if you had assigned it originally.
+
+# 🔍 Exploring the Agent
+
+Explore the validation logic and results:
+
+```r
+agent  # view summary
+pointblank::get_data_extracts(agent)  # failed rows
+pointblank::get_agent_report(agent)  # HTML report
+```

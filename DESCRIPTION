@@ -31,3 +31,4 @@ Depends:
 LazyData: true
 Remotes: 
     impact-initiatives/cleaningtools
+Config/Needs/website: rmarkdown
