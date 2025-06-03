@@ -20,6 +20,8 @@ rows_dissimilar <- function(x, tool, threshold = 7, ...) {
           threshold = threshold,
           ...
         )$soft_duplicate_log
-      }
+      },
+      label = "Dissimilar Rows",
+      brief = "Check for dissimilar rows based on soft duplicates"
     )
 }
