@@ -2,16 +2,16 @@
 % Please edit documentation in R/ui.R
 \name{kqc_module_ui}
 \alias{kqc_module_ui}
-\title{UI for the Data Quality Control Module}
+\title{User Interface for Data Quality Control Module}
 \usage{
 kqc_module_ui(id)
 }
 \arguments{
-\item{id}{character. A unique ID for the module instance.}
+\item{id}{A unique character string identifying the module instance.}
 }
 \value{
-A Shiny UI tag list.
+A Shiny tag list for inclusion in a UI.
 }
 \description{
-UI for the Data Quality Control Module
+User Interface for Data Quality Control Module
 }

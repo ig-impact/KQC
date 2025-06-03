@@ -2,14 +2,14 @@
 % Please edit documentation in R/ui.R
 \name{kqc_ui}
 \alias{kqc_ui}
-\title{User Interface for Data Submission Validator}
+\title{Launch the Data Submission Validator Gadget}
 \usage{
 kqc_ui()
 }
 \value{
-A Shiny miniUI application.
+Launches the UI and returns validated data (or NULL if cancelled).
 }
 \description{
-This function launches a Shiny miniUI application for validating data
-submissions using the KQC module.
+Opens a miniUI-based Shiny gadget with modern styling for validating
+KoboToolbox data submissions using pointblank.
 }

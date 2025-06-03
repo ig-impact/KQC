@@ -2,16 +2,16 @@
 % Please edit documentation in R/ui.R
 \name{kqc_module_server}
 \alias{kqc_module_server}
-\title{Server logic for the Data Quality Control Module}
+\title{Server Logic for Data Quality Control Module}
 \usage{
 kqc_module_server(id)
 }
 \arguments{
-\item{id}{character. A unique ID for the module instance.}
+\item{id}{A unique character string identifying the module instance.}
 }
 \value{
-A reactive expression that returns the pointblank agent object.
+A reactive expression returning the validated data frame.
 }
 \description{
-Server logic for the Data Quality Control Module
+Handles downloading data and validating it using pointblank.
 }
