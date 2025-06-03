@@ -227,5 +227,8 @@ kqc_ui <- function() {
     })
   }
 
-  shiny::runGadget(ui, server)
+  shiny::runGadget(ui,
+    server,
+    viewer = shiny::paneViewer(minHeight = 500)
+  )
 }
