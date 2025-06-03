@@ -1,14 +1,13 @@
 #' User Interface for Data Quality Control Module
 #'
 #' @param id A unique character string identifying the module instance.
+#'
 #' @return A Shiny tag list for inclusion in a UI.
 kqc_module_ui <- function(id) {
   ns <- shiny::NS(id)
 
   htmltools::tagList(
     shinyjs::useShinyjs(),
-
-    # Input and action buttons grouped using a Bootstrap layout
     htmltools::div(
       class = "mb-3",
       shiny::textInput(
@@ -18,8 +17,6 @@ kqc_module_ui <- function(id) {
         value = "aVbeC2BBwhRSzrFf3roZ7z"
       )
     ),
-
-    # Buttons aligned horizontally with spacing
     htmltools::div(
       class = "d-flex gap-2 mb-4",
       shiny::actionButton(
@@ -54,6 +51,7 @@ kqc_module_ui <- function(id) {
 kqc_module_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
     rv <- shiny::reactiveValues(
+      form = NULL,
       downloaded_data = NULL,
       download_successful = FALSE,
       validation_report = NULL,
@@ -73,6 +71,7 @@ kqc_module_server <- function(id) {
 
       rv$download_successful <- FALSE
       rv$downloaded_data <- NULL
+      rv$form <- NULL
       rv$validation_report <- NULL
       shinyjs::disable("validate_btn")
 
@@ -85,9 +84,13 @@ kqc_module_server <- function(id) {
         tryCatch(
           {
             robotoolbox::kobo_setup()
-            data <- robotoolbox::kobo_data(input$uid_input)
+            asset <- robotoolbox::kobo_asset(input$uid_input)
+            data <- robotoolbox::kobo_data(asset)
+            form <- robotoolbox::kobo_form(asset) |>
+              dplyr::distinct(.data[["name"]], .data[["type"]]) # nolint object_usage_linter
 
             rv$downloaded_data <- data
+            rv$form <- form
             rv$download_successful <- TRUE
             shinyjs::enable("validate_btn")
 
@@ -133,7 +136,8 @@ kqc_module_server <- function(id) {
             ) |>
               pointblank::col_exists(columns = c("start", "end", "audit")) |>
               pointblank::col_is_date(columns = "today") |>
-              pointblank::col_vals_not_null(columns = "_uuid") |>
+              col_is_uuid() |> # nolint object_usage_linter
+              rows_dissimilar(tool = rv$form) |> # nolint object_usage_linter
               pointblank::interrogate()
 
             rv$agent <- agent
