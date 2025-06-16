@@ -9,7 +9,7 @@
 #' @inherit pointblank::serially return
 #' @export
 rows_dissimilar <- function(x, tool, threshold = 7, ...) {
-  dataset <- if ("ptblank_agent" %in% class(x)) x$tbl else x
+  dataset <- if (pointblank:::is_a_table_object(x)) x else x$tbl
 
   # TODO: Handle the rest of the parameters especially sm_sepearator
   soft_duplicates_log <- cleaningtools::check_soft_duplicates(
