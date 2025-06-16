@@ -198,7 +198,7 @@
       "Biarch": "true",
       "Author": "Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>), Jan Marvin Garbuszus [ctb]",
       "Maintainer": "Jeroen Ooms <jeroenooms@gmail.com>",
-      "Repository": "RSPM"
+      "Repository": "P3M"
     },
     "askpass": {
       "Package": "askpass",
@@ -293,7 +293,7 @@
       "NeedsCompilation": "no",
       "Author": "Richard Iannone [aut, cre] (<https://orcid.org/0000-0003-3925-190X>), Olivier Roy [ctb], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Richard Iannone <rich@posit.co>",
-      "Repository": "RSPM"
+      "Repository": "P3M"
     },
     "bitops": {
       "Package": "bitops",
@@ -309,7 +309,7 @@
       "NeedsCompilation": "yes",
       "Author": "Steve Dutky [aut] (S original; then (after MM's port) revised and modified), Martin Maechler [cre, aut] (Initial R port; tweaks, <https://orcid.org/0000-0002-8685-9910>)",
       "Maintainer": "Martin Maechler <maechler@stat.math.ethz.ch>",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Encoding": "UTF-8"
     },
     "blastula": {
@@ -364,7 +364,7 @@
       "NeedsCompilation": "no",
       "Author": "Richard Iannone [aut, cre] (<https://orcid.org/0000-0003-3925-190X>), Joe Cheng [aut], Jeroen Ooms [ctb] (<https://orcid.org/0000-0002-4035-0289>), Ted Goas [cph] (cerberus-meta.html), Posit Software, PBC [cph, fnd]",
       "Maintainer": "Richard Iannone <rich@posit.co>",
-      "Repository": "RSPM"
+      "Repository": "P3M"
     },
     "blob": {
       "Package": "blob",
@@ -1742,7 +1742,7 @@
       "NeedsCompilation": "no",
       "Author": "Richard Iannone [aut, cre] (<https://orcid.org/0000-0003-3925-190X>), Joe Cheng [aut], Barret Schloerke [aut] (<https://orcid.org/0000-0001-9986-114X>), Ellis Hughes [aut] (<https://orcid.org/0000-0003-0637-4436>), Alexandra Lauer [aut] (<https://orcid.org/0000-0002-4191-6301>), JooYoung Seo [aut] (<https://orcid.org/0000-0002-4064-6012>), Ken Brevoort [aut] (<https://orcid.org/0000-0002-4001-8358>), Olivier Roy [aut], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Richard Iannone <rich@posit.co>",
-      "Repository": "RSPM"
+      "Repository": "P3M"
     },
     "here": {
       "Package": "here",
@@ -2274,7 +2274,7 @@
       "NeedsCompilation": "no",
       "Author": "Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>, https://yihui.org), Tim Taylor [ctb] (<https://orcid.org/0000-0002-8587-7113>)",
       "Maintainer": "Yihui Xie <xie@yihui.name>",
-      "Repository": "RSPM"
+      "Repository": "P3M"
     },
     "magrittr": {
       "Package": "magrittr",
@@ -2337,7 +2337,7 @@
       "NeedsCompilation": "no",
       "Author": "Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>), JJ Allaire [aut], Jeffrey Horner [aut], Henrik Bengtsson [ctb], Jim Hester [ctb], Yixuan Qiu [ctb], Kohske Takahashi [ctb], Adam November [ctb], Nacho Caballero [ctb], Jeroen Ooms [ctb], Thomas Leeper [ctb], Joe Cheng [ctb], Andrzej Oles [ctb], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Yihui Xie <xie@yihui.name>",
-      "Repository": "RSPM"
+      "Repository": "P3M"
     },
     "memoise": {
       "Package": "memoise",
@@ -2767,7 +2767,7 @@
       "NeedsCompilation": "no",
       "Author": "Richard Iannone [aut, cre] (<https://orcid.org/0000-0003-3925-190X>), Mauricio Vargas [aut] (<https://orcid.org/0000-0003-1017-7574>), June Choe [aut] (<https://orcid.org/0000-0002-0701-921X>)",
       "Maintainer": "Richard Iannone <rich@posit.co>",
-      "Repository": "RSPM"
+      "Repository": "P3M"
     },
     "praise": {
       "Package": "praise",
@@ -3096,7 +3096,7 @@
       "VignetteBuilder": "knitr",
       "NeedsCompilation": "no",
       "Author": "Facebook Inc [aut, cph] (React library in lib, https://reactjs.org/; see AUTHORS for full list of contributors), Michel Weststrate [aut, cph] (mobx library in lib, https://github.com/mobxjs), Kent Russell [aut, cre] (R interface), Alan Dipert [aut] (R interface), Greg Lin [aut] (R interface)",
-      "Repository": "RSPM"
+      "Repository": "P3M"
     },
     "reactable": {
       "Package": "reactable",
@@ -3497,7 +3497,7 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [aut], Thomas Lin Pedersen [cre, aut] (<https://orcid.org/0000-0002-5147-4711>), Dana Seidel [aut], Posit Software, PBC [cph, fnd] (03wc8by49)",
       "Maintainer": "Thomas Lin Pedersen <thomas.pedersen@posit.co>",
-      "Repository": "RSPM"
+      "Repository": "P3M"
     },
     "snakecase": {
       "Package": "snakecase",
@@ -4074,7 +4074,7 @@
       "URL": "https://www.rforge.net/uuid",
       "BugReports": "https://github.com/s-u/uuid/issues",
       "NeedsCompilation": "yes",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Encoding": "UTF-8"
     },
     "vctrs": {
