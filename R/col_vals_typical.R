@@ -6,6 +6,8 @@ NULL
 
 #' Check for Outliers Using the Interquartile Range (IQR)
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' @description
 #' Determines if values in numeric columns are outliers based on the
 #' interquartile range (IQR). A value is considered an outlier if it falls

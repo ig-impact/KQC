@@ -75,6 +75,9 @@ This function is modeled after the native \verb{col_vals_*()} family of
 validation functions and is designed to integrate seamlessly into a
 \code{{pointblank}} agent pipeline.
 }
+\details{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
 \examples{
 \dontrun{
 # Create a sample table with outliers

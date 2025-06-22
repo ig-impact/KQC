@@ -83,3 +83,29 @@ set.seed(1)
 sample(c(msna_opt_HH$`_uuid`[1:10], NA_character_), 10, replace = TRUE) |>
   table(useNA = "ifany")
 ```
+
+## Using `segments`
+
+```{r}
+devtools::load_all()
+agent <- pointblank::create_agent(test_raw_data) |>
+  rows_dissimilar(tool = test_survey, threshold = 7) |>
+  col_vals_typical(
+    # columns = where(is.numeric) & contains("water"),
+    columns = water_tank_nb_sharing,
+    segments = dplyr::vars(water_system_connection),
+    label = "{.seg_col} x {.seg_val}",
+  ) |>
+  col_vals_typical(
+    # columns = where(is.numeric) & contains("water")
+    columns = water_tank_nb_sharing,
+  ) |>
+  pointblank::interrogate()
+
+gt_table <- pointblank::get_agent_report(agent)
+gt::gtsave(gt_table, "man/figures/gt_table_segments.png")
+```
+
+```{r, echo=FALSE, out.width="100%", fig.cap="A pointblank agent after interrogation", fig.align="center", message=FALSE, warning=FALSE}
+knitr::include_graphics("man/figures/gt_table_segments.png")
+```

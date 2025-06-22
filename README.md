@@ -92,3 +92,36 @@ A pointblank agent after interrogation
     #>                                    2                                    1 
     #>                                 <NA> 
     #>                                    2
+
+## Using `segments`
+
+``` r
+devtools::load_all()
+#> ℹ Loading KQC
+agent <- pointblank::create_agent(test_raw_data) |>
+  rows_dissimilar(tool = test_survey, threshold = 7) |>
+  col_vals_typical(
+    # columns = where(is.numeric) & contains("water"),
+    columns = water_tank_nb_sharing,
+    segments = dplyr::vars(water_system_connection),
+    label = "{.seg_col} x {.seg_val}",
+  ) |>
+  col_vals_typical(
+    # columns = where(is.numeric) & contains("water")
+    columns = water_tank_nb_sharing,
+  ) |>
+  pointblank::interrogate()
+
+gt_table <- pointblank::get_agent_report(agent)
+gt::gtsave(gt_table, "man/figures/gt_table_segments.png")
+#> file:////tmp/RtmptJwPZ6/file409a45e022a6e.html screenshot completed
+```
+
+<div class="figure" style="text-align: center">
+
+<img src="man/figures/gt_table_segments.png" alt="A pointblank agent after interrogation" width="100%" />
+<p class="caption">
+A pointblank agent after interrogation
+</p>
+
+</div>
